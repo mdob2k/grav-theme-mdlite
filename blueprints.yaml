@@ -1,0 +1,43 @@
+name: MDLite
+version: 1.0.0
+description: "A Grav theme based on Material Design Lite."
+icon: google
+author:
+  name: mdob2k
+  email: mail@md2k.de
+  url: http://md2k.de
+homepage: https://github.com/mdob2k/grav-theme-mdlite
+demo: http://md2k.de
+keywords: material design lite, theme, google
+bugs: https://github.com/mdob2k/grav-theme-mdlite/issues
+license: MIT
+
+form:
+  validation: loose
+  fields:
+    dropdown.enabled:
+        type: toggle
+        label: Dropdown in navbar
+        highlight: 1
+        default: 1
+        options:
+          1: Enabled
+          0: Disabled
+        validate:
+          type: bool
+    tracking.enabled:
+      type: toggle
+      label: Tracking
+      help: "Tracking enabled or disabled"
+      highlight: 1
+      default: 0
+      options:
+        1: Enabled
+        0: Disabled
+      validate:
+        type: bool
+    tracking.code:
+        type: textarea
+        size: large
+        label: Tracking Code
+        help: "Insert your tracking code (Google Analytics, Piwik etc.)"

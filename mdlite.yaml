@@ -1,0 +1,15 @@
+enabled: true
+dropdown:
+  enabled: false
+tracking:
+  enabled: false
+  code: ''
+
+streams:
+ schemes:
+   theme:
+     type: ReadOnlyStream
+     prefixes:
+       '':
+         - user/themes/mdlite
+         - user/themes/antimatter

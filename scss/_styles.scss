@@ -1,0 +1,30 @@
+.mdlite-main-content {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+.mdlite-blog-item > .mdl-card__media {
+    display: flex;
+    flex-grow: 1;
+    align-items: flex-end;
+    padding: 24px;
+    cursor: pointer;
+}
+.mdlite-post-header h3 {
+    margin: 0;
+    a {
+        text-decoration: none;
+    }
+}
+.mdlite-post-meta {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+.mdlite-blog-nav {
+    @extend .mdl-navigation;
+    a {
+        text-decoration: none;
+    }
+}
+.mdlite-nav-spacer {
+    @extend .mdl-layout-spacer;
+}

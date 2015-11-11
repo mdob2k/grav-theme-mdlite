@@ -1,0 +1,18 @@
+{% for page in pages.children.visible %}
+    {% set current_page = (page.active or page.activeChild) ? 'is-active' : '' %}
+        <a class="mdl-navigation__link {{ current_page }}" href="{{ page.url }}">
+            {% if page.header.icon %}<i class="material-icons">{{ page.header.icon }}</i>{% endif %}
+            {{ page.menu }}
+        </a>
+{% endfor %}
+{# disabled
+{% for mitem in site.menu %}
+        <a class="mdl-navigation__link" href="{{ mitem.url }}">
+            {% if mitem.icon %}<i class="material-icons">{{ mitem.icon }}</i>{% endif %}
+            {{ mitem.text }}
+        </a>
+{% endfor %}
+#}
+{% if config.plugins.login.enabled and grav.user.username %}
+    <i class="material-icons">lock</i> {% include 'partials/login-status.html.twig' %}
+{% endif %}

@@ -1,0 +1,106 @@
+<div class="mdlite-blog-item mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col {{ page.slug|e('html_attr') }}">
+  {% if page.media.images %}
+    {% set header_image = page.header.header_image|defined(true) %}
+    {% set header_image_width  = page.header.header_image_width|defined(1000) %}
+    {% set header_image_height = page.header.header_image_height|defined(300) %}
+    {% set header_image_file = page.header.header_image_file %}
+    {% endif %}
+
+    <div class="mdlite-post-header mdl-card__media mdl-color--grey-50">
+        {% if page.header.link %}
+        <h3>
+            {% if page.header.continue_link is not sameas(false) %}
+            <a href="{{ page.url }}">
+                <i class="material-icons">link</i>
+            </a>
+            {% endif %}
+            <a href="{{ page.header.link }}">{{ page.title }}</a>
+        </h3>
+        {% else %}
+        <h3>
+            <a href="{{ page.url }}">{{ page.title }}</a>
+        </h3>
+        {% endif %}
+        {% if header_image %}
+          {% if header_image_file %}
+            {% set header_image_media = page.media.images[header_image_file] %}
+          {% else %}
+            {% set header_image_media = page.media.images|first %}
+          {% endif %}
+          {% set bgclass = '.' ~ page.slug ~ ' .mdl-card__media' %}
+          {% set bgurl = header_image_media.cropZoom(header_image_width, header_image_height).url %}
+          <style>
+          {{ bgclass }} {
+            background-image: url("{{ bgurl }}");
+            min-height: {{ header_image_height ~ 'px;' }}
+          }
+          </style>
+        {% endif %}
+    </div>
+    <div class="mdlite-post-meta mdl-card__supporting-text mdl-cell mdl-cell--12-col">
+        <span class="mdlite-post-date" id="{{ page.slug }}-date">{{ page.date|nicetime(false) }}</span>
+        <span for="{{ page.slug }}-date" class="mdl-tooltip">{{ page.date|date("F jS Y, H:i") }}</span>
+        {% if page.header.author %}
+        <span class="mdlite-post-author">by {{ page.header.author }}</span>
+        {% else %}
+        <span class="mdlite-post-author">by {{ config.site.author.name }}</span>
+        {% endif %}
+        {# disabled for now.
+        {% if page.taxonomy.tag %}
+        <span class="mdlite-post-tags">
+            {% for tag in page.taxonomy.tag %}
+            <a href="{{ blog.url }}/tag{{ config.system.param_sep }}{{ tag }}">{{ tag }}</a>
+            {% endfor %}
+        </span>
+        {% endif %}
+        #}
+    </div>
+    <div class="mdlite-post-content mdl-card__supporting-text mdl-cell mdl-cell--12-col">
+        {% if page.header.continue_link is sameas(false) %}
+        {{ page.content }}
+        {% if not truncate %}
+        {% set show_prev_next = true %}
+        {% endif %}
+        {% elseif truncate and page.summary != page.content %}
+        {{ page.summary }}
+        <p>
+            <a href="{{ page.url }}">Continue Reading...</a>
+        </p>
+        {% elseif truncate %}
+        {% if page.summary != page.content %}
+        {{ page.content|truncate(550) }}
+        {% else %}
+        {{ page.content }}
+        {% endif %}
+        <p>
+            <a href="{{ page.url }}">Continue Reading...</a>
+        </p>
+        {% else %}
+        {{ page.content }}
+        {% set show_prev_next = true %}
+        {% endif %}
+    </div>
+</div>
+
+{% if show_prev_next %}
+
+<nav class="mdlite-blog-nav mdl-cell mdl-cell--12-col">
+    {% if not page.isFirst %}
+    <a href="{{ page.nextSibling.url }}" class="mdlite-nav__button">
+      <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" role="presentation">
+        <i class="material-icons">arrow_back</i>
+      </button>
+      Newer
+    </a>
+    {% endif %}
+    {% if not page.isLast %}
+    <div class="mdlite-nav-spacer"></div>
+    <a href="{{ page.prevSibling.url }}" class="mdlite-nav__button">
+      Older
+      <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" role="presentation">
+        <i class="material-icons">arrow_forward</i>
+      </button>
+    </a>
+    {% endif %}
+</nav>
+{% endif %}
