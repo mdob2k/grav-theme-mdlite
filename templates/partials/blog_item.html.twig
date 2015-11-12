@@ -39,7 +39,7 @@
     </div>
     <div class="mdlite-post-meta mdl-card__supporting-text mdl-cell mdl-cell--12-col">
         <span class="mdlite-post-date" id="{{ page.slug }}-date">{{ page.date|nicetime(false) }}</span>
-        <span for="{{ page.slug }}-date" class="mdl-tooltip">{{ page.date|date("F jS Y, H:i") }}</span>
+        <span for="{{ page.slug }}-date" class="mdl-tooltip">{{ page.date|date("F j Y, H:i") }}</span>
         {% if page.header.author %}
         <span class="mdlite-post-author">by {{ page.header.author }}</span>
         {% else %}
@@ -63,18 +63,22 @@
         {% endif %}
         {% elseif truncate and page.summary != page.content %}
         {{ page.summary }}
-        <p>
-            <a href="{{ page.url }}">Continue Reading...</a>
-        </p>
+        <div class="mdlite-readmore">
+            <a href="{{ page.url }}">
+              <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Read more</button>
+            </a>
+        </div>
         {% elseif truncate %}
         {% if page.summary != page.content %}
         {{ page.content|truncate(550) }}
         {% else %}
         {{ page.content }}
         {% endif %}
-        <p>
-            <a href="{{ page.url }}">Continue Reading...</a>
-        </p>
+        <div class="mdlite-readmore">
+            <a href="{{ page.url }}">
+              <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Read more</button>
+            </a>
+        </div>
         {% else %}
         {{ page.content }}
         {% set show_prev_next = true %}
