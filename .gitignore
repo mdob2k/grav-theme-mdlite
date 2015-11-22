@@ -1,5 +1,4 @@
 bower_components
 node_modules
 mdl-templates
-/templates/**/_*
-!/templates/partials/blog_item*
+am_templates

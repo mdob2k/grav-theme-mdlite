@@ -2,7 +2,7 @@ var gulp = require('gulp'),
     del = require('del'),
     sass = require('gulp-sass'),
     sourcemaps = require('gulp-sourcemaps'),
-    minifyCSS = require('gulp-minify-css'),
+    minifyCss = require('gulp-minify-css'),
     concat = require('gulp-concat'),
     rename = require('gulp-rename'),
     uglify = require('gulp-uglify');
@@ -53,7 +53,7 @@ gulp.task('uglify', function() {
 });
 
 gulp.task('watch', function() {
-    return gulp.watch('./scss/**/*.scss', ['styles']);
+    return gulp.watch('./scss/**/*.scss', ['sass']);
 });
 
-gulp.task('default', ['clean', 'copy', 'uglify', 'sass']);
+gulp.task('default', ['clean', 'copy', 'uglify', 'sass', 'minify-css']);
