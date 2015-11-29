@@ -8,13 +8,13 @@
         <title>{% if header.title %}{{ header.title|e('html') }}
             |
             {% endif %}{{ site.title|e('html') }}</title>
-        <link href="{{ url('theme://images/favicon.png', true) }}" rel="icon" type="image/png"/>
-        <link href="{{ page.url(true, true) }}" rel="canonical"/>
+        <link href="{{ url('theme://images/favicon.png', true) }}" rel="icon" type="image/png">
+        <link href="{{ page.url(true, true) }}" rel="canonical">
+        <link href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&lang=en" type="text/css" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" type="text/css" rel="stylesheet">
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" type="text/css" rel="stylesheet">
         {% block stylesheets %}
-        {% do assets.addCss('https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&lang=en', 103) %}
-        {% do assets.addCss('https://fonts.googleapis.com/icon?family=Material+Icons', 102) %}
-        {% do assets.addCss('https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css', 101) %}
-        {% do assets.addCss('theme://css/mdlite.css', 100) %}
+        {% do assets.addCss('theme://css/mdlite.css', 101) %}
         {% endblock %}
         {{ assets.css() }}
         {% if config.themes.mdlite.tracking.enabled %}
@@ -85,7 +85,7 @@
             </main>
         </div>
         {% block javascripts %}
-        {% do assets.addJs('theme://js/material.js',101) %}
+        {% do assets.addJs('theme://js/material.js',{'priority': 101, 'loading': 'async'}) %}
         {% endblock %}
         {{ assets.js() }}
         {% block bottom %}
