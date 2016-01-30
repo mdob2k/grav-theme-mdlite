@@ -28,3 +28,8 @@
 .mdlite-nav-spacer {
     @extend .mdl-layout-spacer;
 }
+
+.mdlite-default img, .mdlite-blog-item img {
+    max-width: 100%;
+    height: auto;
+}
