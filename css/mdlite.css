@@ -9274,7 +9274,8 @@ _:-ms-input-placeholder, :root .mdl-slider.mdl-slider.is-upgraded {
 .mdlite-blog-nav a {
   text-decoration: none; }
 
-.mdlite-default img, .mdlite-blog-item img {
+.mdlite-default img,
+.mdlite-blog-item img {
   max-width: 100%;
   height: auto; }
 

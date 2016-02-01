@@ -2,7 +2,7 @@ var gulp = require('gulp'),
     del = require('del'),
     sass = require('gulp-sass'),
     sourcemaps = require('gulp-sourcemaps'),
-    minifyCss = require('gulp-minify-css'),
+    cssnano = require('gulp-cssnano'),
     concat = require('gulp-concat'),
     rename = require('gulp-rename'),
     uglify = require('gulp-uglify');
@@ -30,12 +30,12 @@ gulp.task('sass', function() {
 gulp.task('minify-css', function() {
     return gulp.src('./css/*.css')
         .pipe(sourcemaps.init())
-        .pipe(minifyCss())
+        .pipe(cssnano())
         .pipe(rename({
             suffix: '.min'
         }))
         .pipe(sourcemaps.write('.'))
-        .pipe(gulp.dest('./css/'));
+        .pipe(gulp.dest('./css'));
 });
 
 gulp.task('uglify', function() {
