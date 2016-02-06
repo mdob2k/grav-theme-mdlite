@@ -4,7 +4,9 @@
 {% if config.plugins.breadcrumbs.enabled %}
 {% include 'partials/breadcrumbs.html.twig' %}
 {% endif %}
+<div class="mdlite-blog mdl-grid">
 {% include 'partials/blog_item.html.twig' with {'blog':page.parent, 'truncate':false} %}
+</div>
 {% endblock %}
 
 {% endembed %}
