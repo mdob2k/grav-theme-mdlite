@@ -22,6 +22,6 @@
     "tests"
   ],
   "devDependencies": {
-    "material-design-lite": "~1.1.1"
+    "material-design-lite": "~1.1.3"
   }
 }

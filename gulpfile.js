@@ -4,38 +4,40 @@ var gulp = require('gulp'),
     sourcemaps = require('gulp-sourcemaps'),
     cssnano = require('gulp-cssnano'),
     concat = require('gulp-concat'),
+    merge = require('merge-stream'),
     rename = require('gulp-rename'),
     uglify = require('gulp-uglify');
 
 gulp.task('clean', function() {
     del([
         './css/**/*',
-        './js/**/*'
+        './js/**/*',
+        '!./css/theme.css',
+        '!./js/theme.js'
     ]);
 });
 
 gulp.task('copy', function() {
-    return gulp.src('bower_components/material-design-lite/material.js')
+    return gulp.src(['bower_components/material-design-lite/material*.js', 'bower_components/material-design-lite/material*.js.map'])
         .pipe(gulp.dest('./js'));
 });
 
-gulp.task('sass', function() {
-    return gulp.src('./scss/**/*.scss')
+gulp.task('styles', function() {
+    var dosass = gulp.src('./scss/**/*.scss')
         .pipe(sourcemaps.init())
         .pipe(sass())
         .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest('./css'));
-});
-
-gulp.task('minify-css', ['sass'], function() {
-    return gulp.src('./css/*.css')
+    var donano = gulp.src('./scss/**/*.scss')
         .pipe(sourcemaps.init())
+        .pipe(sass())
         .pipe(cssnano())
         .pipe(rename({
             suffix: '.min'
         }))
         .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest('./css'));
+    return merge(dosass, donano);
 });
 
 gulp.task('uglify', ['copy'], function() {
@@ -56,4 +58,4 @@ gulp.task('watch', function() {
     return gulp.watch('./scss/**/*.scss', ['sass']);
 });
 
-gulp.task('default', ['clean', 'copy', 'uglify', 'sass', 'minify-css']);
+gulp.task('default', ['clean', 'copy', 'styles']);

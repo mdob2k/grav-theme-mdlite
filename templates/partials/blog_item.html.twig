@@ -45,15 +45,6 @@
         {% else %}
         <span class="mdlite-post-author">by {{ config.site.author.name }}</span>
         {% endif %}
-        {# disabled for now.
-        {% if page.taxonomy.tag %}
-        <span class="mdlite-post-tags">
-            {% for tag in page.taxonomy.tag %}
-            <a href="{{ blog.url }}/tag{{ config.system.param_sep }}{{ tag }}">{{ tag }}</a>
-            {% endfor %}
-        </span>
-        {% endif %}
-        #}
     </div>
     <div class="mdlite-post-content mdl-card__supporting-text mdl-cell mdl-cell--12-col">
         {% if page.header.continue_link is sameas(false) %}
@@ -81,6 +72,13 @@
         </div>
         {% else %}
         {{ page.content }}
+        {% if page.taxonomy.tag %}
+        <div class="mdlite-post-tags">
+            {% for tag in page.taxonomy.tag %}
+            <a href="{{ blog.url }}/tag{{ config.system.param_sep }}{{ tag }}">{{ tag }}</a>{{ not loop.last ? ", " }}
+            {% endfor %}
+        </div>
+        {% endif %}
         {% set show_prev_next = true %}
         {% endif %}
     </div>

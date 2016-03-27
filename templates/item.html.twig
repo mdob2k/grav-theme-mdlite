@@ -1,12 +1,11 @@
 {% embed 'partials/base.html.twig' %}
-
-{% block content %}
-{% if config.plugins.breadcrumbs.enabled %}
-{% include 'partials/breadcrumbs.html.twig' %}
-{% endif %}
-<div class="mdlite-blog mdl-grid">
-{% include 'partials/blog_item.html.twig' with {'blog':page.parent, 'truncate':false} %}
-</div>
-{% endblock %}
-
+    {% use 'partials/blog_modules.html.twig' %}
+    {% block content %}
+        <div class="mdlite-blog mdl-grid">
+            {% if config.plugins.breadcrumbs.enabled %}
+                {% include 'partials/breadcrumbs.html.twig' %}
+            {% endif %}
+            {{ block('blog_single_post') }}
+        </div>
+    {% endblock %}
 {% endembed %}

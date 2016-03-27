@@ -1,17 +1,15 @@
 {% embed 'partials/base.html.twig' %}
-{% set collection = page.collection() %}
-{% block content %}
-{% if config.plugins.breadcrumbs.enabled %}
-{% include 'partials/breadcrumbs.html.twig' %}
-{% endif %}
-<div class="mdlite-blog-list mdl-grid">
-    {% for child in collection %}
-    {% include 'partials/blog_item.html.twig' with {'blog':page, 'page':child, 'truncate':true} %}
-    {% endfor %}
-
-    {% if config.plugins.pagination.enabled and collection.params.pagination %}
-    {% include 'partials/pagination.html.twig' with {'base_url':page.url, 'pagination':collection.params.pagination} %}
-    {% endif %}
-</div>
-{% endblock %}
+    {% use 'partials/blog_modules.html.twig' %}
+    {% set collection = page.collection() %}
+    {% block content %}
+        <div class="mdlite-blog-list mdl-grid">
+            {% if config.plugins.breadcrumbs.enabled %}
+                {% include 'partials/breadcrumbs.html.twig' %}
+            {% endif %}
+            {{ block('blog_list_posts') }}
+            {% if config.plugins.pagination.enabled and collection.params.pagination %}
+                {% include 'partials/pagination.html.twig' with {'base_url': page.url, 'pagination': collection.params.pagination} %}
+            {% endif %}
+        </div>
+    {% endblock %}
 {% endembed %}

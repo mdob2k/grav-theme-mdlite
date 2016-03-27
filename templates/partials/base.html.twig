@@ -5,20 +5,31 @@
         <meta content="IE=edge" http-equiv="X-UA-Compatible">
         {% include 'partials/metadata.html.twig' %}
         <meta content="width=device-width, initial-scale=1" name="viewport">
-        <title>{% if header.title %}{{ header.title|e('html') }}
-            |
+        <title>
+            {% if header.title %}{{ header.title|e('html') }}
+                |
             {% endif %}{{ site.title|e('html') }}</title>
         <link href="{{ url('theme://images/favicon.png', true) }}" rel="icon" type="image/png">
         <link href="{{ page.url(true, true) }}" rel="canonical">
         <link href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&lang=en" type="text/css" rel="stylesheet">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" type="text/css" rel="stylesheet">
-        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" type="text/css" rel="stylesheet">
+        <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" type="text/css" rel="stylesheet">
         {% block stylesheets %}
-        {% do assets.addCss('theme://css/mdlite.css', 101) %}
+            {% do
+                assets.addCss('theme://css/mdlite.min.css', 101) %}
         {% endblock %}
         {{ assets.css() }}
+        {% block javascripts %}
+            {% do
+                assets.addJs('theme://js/material.min.js', {
+                    'priority': 101,
+                    'loading': 'defer',
+                    'group': 'bottom'
+                }) %}
+        {% endblock %}
+        {{ assets.js() }}
         {% if config.themes.mdlite.tracking.enabled %}
-        {{ config.themes.mdlite.tracking.code }}
+            {{ config.themes.mdlite.tracking.code }}
         {% endif %}
     </head>
     <body class="{{ page.header.body_classes }}">
@@ -29,85 +40,81 @@
                     <span class="mdl-layout__title">{{ config.site.title }}</span>
                     <div class="mdl-layout-spacer"></div>
                     {% block header_navigation %}
-                    <nav class="mdlite-header-nav mdl-navigation  mdl-layout--large-screen-only">
-                        {% include 'partials/navigation.html.twig' %}
-                    </nav>
+                        <nav class="mdlite-header-nav mdl-navigation  mdl-layout--large-screen-only">
+                            {% include 'partials/navigation.html.twig' %}
+                        </nav>
                     {% endblock %}
                 </div>
             </header>
             <div class="mdl-layout__drawer">
                 <span class="mdl-layout__title">{{ config.site.title }}</span>
                 {% block drawer_navigation %}
-                <nav class="mdl-navigation">
-                    {% include 'partials/navigation.html.twig' %}
-                </nav>
+                    <nav class="mdl-navigation">
+                        {% include 'partials/navigation.html.twig' %}
+                    </nav>
                 {% endblock %}
             </div>
             <main class="mdl-layout__content">
                 {% block body %}
-                <div class="mdlite-main-content">
-                    {% block content %}{% endblock %}
-                </div>
+                    <div class="mdlite-main-content">
+                        {% block content %}{% endblock %}
+                    </div>
                 {% endblock %}
                 {% block footer %}
-                <footer class="mdl-mini-footer">
-                    <div class="mdl-mini-footer__left-section">
-                        <div class="mdl-logo">
-                            &copy;
-                            {{ now|date('Y') }}
-                            {{ config.site.author.name }}
+                    <footer class="mdl-mini-footer">
+                        <div class="mdl-mini-footer__left-section">
+                            <div class="mdl-logo">
+                                &copy;
+                                {{ now|date('Y') }}
+                                {{ config.site.author.name }}
+                            </div>
+                            {% if site.linklist %}
+                                <ul class="mdl-mini-footer__link-list">
+                                    {% for listitem in site.linklist %}
+                                        <li>
+                                            <a class="mdlite-footer-links" href="{{ listitem.url }}">{{ listitem.text }}</a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
                         </div>
-                        {% if site.linklist %}
-                        <ul class="mdl-mini-footer__link-list">
-                            {% for listitem in site.linklist %}
-                            <li>
-                                <a class="mdlite-footer-links" href="{{ listitem.url }}">{{ listitem.text }}</a>
-                            </li>
+                        <div class="mdl-mini-footer__right-section">
+                            <ul class="mdl-mini-footer__link-list">
+                                {% for listitem in config.themes.mdlite.footerlinks %}
+                                    <li>
+                                        <a class="mdlite-footer-link mdl-color-text--white" href="{{ listitem.url }}">
+                                            {% if listitem.icon %}
+                                                <i class="fa fa-{{ listitem.icon }} fa-lg"></i>
+                                            {% else %}
+                                                {{ listitem.text }}
+                                            {% endif %}
+                                        </a>
+                                    </li>
+                                </button>
                             {% endfor %}
                         </ul>
-                        {% endif %}
-                    </div>
-                    <div class="mdl-mini-footer__right-section">
-                        {% for listitem in site.linklist %}
-                        <button class="mdl-mini-footer__social-btn">
-                            <a class="mdlite-footer-link  mdl-color-text--white" href="{{ listitem.url }}">
-                                {% if listitem.icon %}
-                                <i class="fa fa-{{ listitem.icon }} fa-lg"></i>
-                                {% else %}
-                                {{ listitem.text }}
-                                {% endif %}
-                            </a>
-                        </button>
-                        {% endfor %}
                     </div>
                 </footer>
-                {% endblock %}
-            </main>
-        </div>
-        {% block javascripts %}
-        {% do assets.addJs('theme://js/material.js',{'priority': 101, 'loading': 'async'}) %}
-        {% endblock %}
-        {{ assets.js() }}
-        {% block bottom %}
+            {% endblock %}
+        </main>
+    </div>
+    {% block bottom %}
+        {{ assets.js('bottom') }}
         <script>
-            Array
-                .prototype
-                .forEach
-                .call(document.querySelectorAll('.mdl-card__media'), function(el) {
-                    var link = el.querySelector('a');
-                    if (!link) {
-                        return;
-                    }
-                    var target = link.getAttribute('href');
-                    if (!target) {
-                        return;
-                    }
-                    el
-                        .addEventListener('click', function() {
-                            location.href = target;
-                        });
+            Array.prototype.forEach.call(document.querySelectorAll('.mdl-card__media'), function(el) {
+                var link = el.querySelector('a');
+                if (!link) {
+                    return;
+                }
+                var target = link.getAttribute('href');
+                if (!target) {
+                    return;
+                }
+                el.addEventListener('click', function() {
+                    location.href = target;
                 });
+            });
         </script>
-        {% endblock %}
-    </body>
+    {% endblock %}
+</body>
 </html>

@@ -41,3 +41,19 @@ form:
         size: large
         label: Tracking Code
         help: "Insert your tracking code (Google Analytics, Piwik etc.)"
+    linksection:
+        type: section
+        title: Footer Links
+    footerlinks:
+        type: list
+        label: Footer Links
+        fields:
+            .text:
+                type: text
+                label: Text
+            .url:
+                type: text
+                label: URL
+            .icon:
+                type: text
+                label: Icon
